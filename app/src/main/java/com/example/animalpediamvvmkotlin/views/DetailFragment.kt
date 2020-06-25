@@ -25,13 +25,13 @@ class DetailFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_detail, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         fab_2.setOnClickListener {
             val actionToList:NavDirections = DetailFragmentDirections.actionGoToList()
             Navigation.findNavController(it).navigate(actionToList)
         }
-    }
+    }*/
 
 }

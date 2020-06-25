@@ -24,12 +24,12 @@ class ListDataFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_list_data, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fab_1.setOnClickListener {
             val actionToDetail:NavDirections = ListDataFragmentDirections.actionGoToDetails()
             Navigation.findNavController(it).navigate(actionToDetail)
         }
-    }
+    }*/
 
 }

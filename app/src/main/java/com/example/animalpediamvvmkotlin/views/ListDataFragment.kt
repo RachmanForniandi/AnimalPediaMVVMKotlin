@@ -67,6 +67,14 @@ class ListDataFragment : Fragment() {
             layoutManager = GridLayoutManager(context,2)
             adapter = animalAdapter
         }
+
+        swipeRefreshData.setOnRefreshListener {
+            animal_list.visibility = View.GONE
+            txt_error.visibility = View.GONE
+            loading_indicator.visibility = View.VISIBLE
+            viewModel.refresh()
+            swipeRefreshData.isRefreshing = false
+        }
     }
 
 }

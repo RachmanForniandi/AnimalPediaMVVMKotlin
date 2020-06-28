@@ -2,4 +2,7 @@
     <string name="app_name">AnimalPediaMVVMKotlin</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="animal_picture">animal picture</string>
+    <string name="animal_name">Animal Name</string>
+    <string name="an_error_occured_while_loading_the_data">An error occured while loading the data</string>
 </resources>

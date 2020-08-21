@@ -7,28 +7,30 @@ data class ApiKey(
     val message:String?,
     val key:String?
 )
-data class Animal (
-    val name:String?,
+
+data class Animal(
+    val name: String?,
     val taxonomy: Taxonomy?,
     val location:String?,
-    val speed:String?,
-    val diet: String?,
+    val speed:Speed?,
+    val diet:String?,
 
     @SerializedName("lifespan")
-    val lifeSpan: String?,
+    val lifeSpan:String?,
+    
+    @SerializedName("image")
+    val imageUrl:String?
 
-    @SerializedName("Image")
-    val imageURL: String?
 )
 
-data class Taxonomy (
-    var kingdom: String?,
-    var order: String?,
-    var family: String?
+data class Taxonomy(
+    val kingdom: String?,
+    val family: String?,
+    val order: String
 )
 
-data class Speed (
-    var metric: String? ,
-    var imperial: String?
+data class Speed(
+    val metric:String?,
+    val imperial:String?
 )
 

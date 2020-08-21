@@ -1,6 +1,7 @@
 package com.example.animalpediamvvmkotlin.views
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -42,9 +43,6 @@ class ListDataFragment : Fragment() {
         txt_error.visibility = if (isError)View.VISIBLE else View.GONE
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,11 +56,11 @@ class ListDataFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
-        viewModel.animals.observe(viewLifecycleOwner,animalListDataObserver)
         viewModel.loading.observe(viewLifecycleOwner,loadingLiveDataObserver)
+        viewModel.animals.observe(viewLifecycleOwner,animalListDataObserver)
+
         viewModel.loadError.observe(viewLifecycleOwner,errorLiveDataObserver)
         viewModel.refresh()
-
         animal_list.apply {
             layoutManager = GridLayoutManager(context,2)
             adapter = animalAdapter

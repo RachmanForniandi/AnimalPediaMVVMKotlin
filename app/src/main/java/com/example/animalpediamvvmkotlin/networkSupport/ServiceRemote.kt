@@ -1,5 +1,7 @@
 package com.example.animalpediamvvmkotlin.networkSupport
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import com.example.animalpediamvvmkotlin.models.Animal
 import com.example.animalpediamvvmkotlin.models.ApiKey
 import io.reactivex.Single
@@ -19,11 +21,13 @@ class ServiceRemote {
         .build()
         .create(AnimalService::class.java)
 
-    fun useApiKey(): Single<ApiKey?>? {
+    fun useApiKey(): Single<ApiKey> {
         return animalService.getApiKey()
     }
 
     fun useAnimalData(key: String): Single<List<Animal>> {
+        /*val getAnimals = animalService.getDataOfAnimals(key)
+        Log.d(TAG, ".getAnimals Called $getAnimals")*/
         return animalService.getDataOfAnimals(key)
     }
 }

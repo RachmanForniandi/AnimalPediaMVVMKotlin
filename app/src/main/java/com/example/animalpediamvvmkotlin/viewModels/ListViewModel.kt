@@ -68,7 +68,6 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
 
     }*/
 
-
     private fun obtainDataAnimals(key:String) {
         Log.d("ListViewModel", "obtainDataAnimals Called")
         disposable.add(

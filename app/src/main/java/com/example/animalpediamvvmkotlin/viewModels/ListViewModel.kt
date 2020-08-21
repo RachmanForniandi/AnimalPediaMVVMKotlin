@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.animalpediamvvmkotlin.models.Animal
 import com.example.animalpediamvvmkotlin.models.ApiKey
 import com.example.animalpediamvvmkotlin.networkSupport.ServiceRemote
+import com.example.animalpediamvvmkotlin.utility.SharedPreferencesHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
@@ -21,9 +22,25 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
     private val disposable = CompositeDisposable()
     private val api = ServiceRemote()
 
+    private val sharedPreferences = SharedPreferencesHelper(getApplication())
+
+    private var invalidApiKey = false
+
 
     fun refresh(){
         //obtainDataAnimals()
+        loading.value = true
+        invalidApiKey = false
+        val itemKey = sharedPreferences.fetchApiKey()
+        if (itemKey.isNullOrEmpty()){
+            obtainKey()
+        }else{
+            obtainDataAnimals(itemKey)
+        }
+
+    }
+
+    fun hardRefresh(){
         loading.value = true
         obtainKey()
     }
@@ -39,6 +56,7 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
                                     loadError.value = true
                                     loading.value = false
                                 }else{
+                                    sharedPreferences.saveApiKey(key.key)
                                     obtainDataAnimals(key.key)
                                 }
                             }
@@ -83,10 +101,16 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
                             }
 
                             override fun onError(e: Throwable) {
-                                e.printStackTrace()
-                                loading.value = false
-                                animals.value = null
-                                loadError.value = true
+                                if (!invalidApiKey){
+                                    invalidApiKey = true
+                                    obtainKey()
+                                }else{
+                                    e.printStackTrace()
+                                    loading.value = false
+                                    animals.value = null
+                                    loadError.value = true
+                                }
+
                             }
                         })
         )

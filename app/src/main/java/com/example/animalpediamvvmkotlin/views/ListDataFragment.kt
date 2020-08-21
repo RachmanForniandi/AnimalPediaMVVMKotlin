@@ -70,7 +70,8 @@ class ListDataFragment : Fragment() {
             animal_list.visibility = View.GONE
             txt_error.visibility = View.GONE
             loading_indicator.visibility = View.VISIBLE
-            viewModel.refresh()
+            //viewModel.refresh()
+            viewModel.hardRefresh()
             swipeRefreshData.isRefreshing = false
         }
     }

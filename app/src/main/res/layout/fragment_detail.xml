@@ -1,34 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
     tools:context=".views.DetailFragment">
 
+
+    <ImageView
+        android:id="@+id/imgDetailAnimal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:minHeight="200dp"
+        android:contentDescription="@string/img_animal" />
+
     <TextView
-        android:id="@+id/txt_2"
+        android:id="@+id/tvNameAnimal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Detail Fragment"
-        android:layout_margin="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_2"
+        android:layout_margin="4dp"
+        android:text="Animal Name"
+        style="@style/Text"
+        />
+    <TextView
+        android:id="@+id/tvAnimalLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:src="@drawable/ic_details"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_margin="4dp"
+        android:text="Animal Location"
+        style="@style/Text"
+        />
+    <TextView
+        android:id="@+id/tvAnimalLifeSpan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:text="Animal Lifespan"
+        style="@style/Text"
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/tvAnimalDiet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:text="Animal Diet"
+        style="@style/Text"
+        />
+
+
+</LinearLayout>

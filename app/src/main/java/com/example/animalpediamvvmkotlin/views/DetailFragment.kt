@@ -8,11 +8,18 @@ import android.view.ViewGroup
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import com.example.animalpediamvvmkotlin.R
+import com.example.animalpediamvvmkotlin.models.Animal
+import com.example.animalpediamvvmkotlin.utility.getProgressDrawable
+import com.example.animalpediamvvmkotlin.utility.loadImage
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_list_data.*
+import kotlinx.android.synthetic.main.item_data_animal.*
 
 
 class DetailFragment : Fragment() {
+
+    var animal: Animal? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -25,13 +32,22 @@ class DetailFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_detail, container, false)
     }
 
-    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fab_2.setOnClickListener {
-            val actionToList:NavDirections = DetailFragmentDirections.actionGoToList()
-            Navigation.findNavController(it).navigate(actionToList)
+        arguments?.let {
+            animal = DetailFragmentArgs.fromBundle(it).animal
         }
-    }*/
+
+        context?.let {
+            imgDetailAnimal.loadImage(animal?.imageUrl, getProgressDrawable(it))
+        }
+
+        tvNameAnimal.text = animal?.name
+        tvAnimalLocation.text = animal?.location
+        tvAnimalLifeSpan.text = animal?.lifeSpan
+        tvAnimalDiet.text = animal?.diet
+
+    }
 
 }

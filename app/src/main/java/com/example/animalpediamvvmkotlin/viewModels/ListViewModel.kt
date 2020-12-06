@@ -6,8 +6,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.animalpediamvvmkotlin.di.ApiModule_ProvideAnimalServiceRemoteFactory.create
 import com.example.animalpediamvvmkotlin.di.AppModule
+import com.example.animalpediamvvmkotlin.di.CONTEXT_APP
 import com.example.animalpediamvvmkotlin.di.DaggerApiComponent.create
 import com.example.animalpediamvvmkotlin.di.DaggerViewModelComponent
+import com.example.animalpediamvvmkotlin.di.TypeOfContext
 import com.example.animalpediamvvmkotlin.models.Animal
 import com.example.animalpediamvvmkotlin.models.ApiKey
 import com.example.animalpediamvvmkotlin.networkSupport.ServiceRemote
@@ -30,19 +32,10 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
     lateinit var api :ServiceRemote
 
     @Inject
+    @field:TypeOfContext(CONTEXT_APP)
     lateinit var sharedPreferences:SharedPreferencesHelper
 
     private var invalidApiKey = false
-    //private var injected = false
-/*
-    fun inject(){
-        if (!injected){
-            DaggerViewModelComponent.builder()
-                .appModule(AppModule(getApplication()))
-                .build()
-                .inject(this)
-        }
-    }*/
 
     init {
         DaggerViewModelComponent.builder()

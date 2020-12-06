@@ -9,6 +9,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface AnimalService {
+
     @GET("getKey")
     fun getApiKey(): Single<ApiKey>
 

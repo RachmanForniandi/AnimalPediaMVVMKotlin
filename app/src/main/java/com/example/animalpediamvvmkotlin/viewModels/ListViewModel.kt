@@ -4,6 +4,12 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.example.animalpediamvvmkotlin.di.ApiModule_ProvideAnimalServiceRemoteFactory.create
+import com.example.animalpediamvvmkotlin.di.AppModule
+import com.example.animalpediamvvmkotlin.di.CONTEXT_APP
+import com.example.animalpediamvvmkotlin.di.DaggerApiComponent.create
+import com.example.animalpediamvvmkotlin.di.DaggerViewModelComponent
+import com.example.animalpediamvvmkotlin.di.TypeOfContext
 import com.example.animalpediamvvmkotlin.models.Animal
 import com.example.animalpediamvvmkotlin.models.ApiKey
 import com.example.animalpediamvvmkotlin.networkSupport.ServiceRemote
@@ -12,6 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 class ListViewModel(application: Application): AndroidViewModel(application) {
 
@@ -20,11 +27,22 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
     val loading by lazy { MutableLiveData<Boolean>() }
 
     private val disposable = CompositeDisposable()
-    private val api = ServiceRemote()
 
-    private val sharedPreferences = SharedPreferencesHelper(getApplication())
+    @Inject
+    lateinit var api :ServiceRemote
+
+    @Inject
+    @field:TypeOfContext(CONTEXT_APP)
+    lateinit var sharedPreferences:SharedPreferencesHelper
 
     private var invalidApiKey = false
+
+    init {
+        DaggerViewModelComponent.builder()
+            .appModule(AppModule(getApplication()))
+            .build()
+            .inject(this)
+    }
 
 
     fun refresh(){

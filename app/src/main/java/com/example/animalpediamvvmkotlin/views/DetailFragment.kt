@@ -17,6 +17,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.example.animalpediamvvmkotlin.R
 import com.example.animalpediamvvmkotlin.databinding.FragmentDetailBinding
 import com.example.animalpediamvvmkotlin.models.Animal
+import com.example.animalpediamvvmkotlin.models.AnimalPalette
 import com.example.animalpediamvvmkotlin.utility.getProgressDrawable
 import com.example.animalpediamvvmkotlin.utility.loadImage
 import kotlinx.android.synthetic.main.fragment_detail.*
@@ -78,8 +79,9 @@ class DetailFragment : Fragment() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     Palette.from(resource)
                         .generate { palette ->
-                            val initColor = palette?.lightMutedSwatch?.rgb ?:0
-                            dataBinding.animalDetail.setBackgroundColor(initColor)
+                            val intColor = palette?.lightMutedSwatch?.rgb ?:0
+                            //dataBinding.animalDetail.setBackgroundColor(initColor)
+                            dataBinding.palette = AnimalPalette(intColor)
                         }
                 }
 

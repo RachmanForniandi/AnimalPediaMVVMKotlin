@@ -8,11 +8,15 @@
         <variable
             name="animal"
             type="com.example.animalpediamvvmkotlin.models.Animal" />
+        <variable
+            name="palette"
+            type="com.example.animalpediamvvmkotlin.models.AnimalPalette" />
     </data>
+
     <LinearLayout
-        android:id="@+id/animalDetail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@{palette.color}"
         android:orientation="vertical"
         android:gravity="center_horizontal">
 

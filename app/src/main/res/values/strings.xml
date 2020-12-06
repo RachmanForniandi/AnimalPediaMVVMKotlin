@@ -5,4 +5,5 @@
     <string name="animal_picture">animal picture</string>
     <string name="animal_name">Animal Name</string>
     <string name="an_error_occured_while_loading_the_data">An error occured while loading the data</string>
+    <string name="img_animal">imageAnimal</string>
 </resources>

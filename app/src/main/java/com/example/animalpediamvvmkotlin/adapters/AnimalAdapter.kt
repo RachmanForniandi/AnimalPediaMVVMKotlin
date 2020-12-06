@@ -3,15 +3,16 @@ package com.example.animalpediamvvmkotlin.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.animalpediamvvmkotlin.R
+import com.example.animalpediamvvmkotlin.databinding.ItemDataAnimalBinding
 import com.example.animalpediamvvmkotlin.models.Animal
-import com.example.animalpediamvvmkotlin.utility.getProgressDrawable
-import com.example.animalpediamvvmkotlin.utility.loadImage
-import kotlinx.android.synthetic.main.item_data_animal.view.*
+import com.example.animalpediamvvmkotlin.views.ListDataFragmentDirections
 import java.util.ArrayList
 
-class AnimalAdapter(private val animalList: ArrayList<Animal>):RecyclerView.Adapter<AnimalAdapter.AnimalHolder>() {
+class AnimalAdapter(private val animalList: ArrayList<Animal>):RecyclerView.Adapter<AnimalAdapter.AnimalHolder>() , AnimalClickListener{
 
     fun updateAnimalList(newAnimalList: List<Animal>){
         animalList.clear()
@@ -20,7 +21,7 @@ class AnimalAdapter(private val animalList: ArrayList<Animal>):RecyclerView.Adap
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_data_animal,parent,false)
+        val view = DataBindingUtil.inflate<ItemDataAnimalBinding>(LayoutInflater.from(parent.context),R.layout.item_data_animal,parent,false)
         return AnimalHolder(view)
     }
 
@@ -29,12 +30,22 @@ class AnimalAdapter(private val animalList: ArrayList<Animal>):RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: AnimalHolder, position: Int) {
-        holder.itemView.txt_animal_name.text = animalList[position].name
-        holder.itemView.img_animal.loadImage(animalList[position].imageUrl,
-            getProgressDrawable(holder.itemView.context))
+
+        holder.view.animal = animalList[position]
+        holder.view.listener = this
+
     }
 
-    class AnimalHolder (itemView: View):RecyclerView.ViewHolder(itemView){
+    override fun onClick(v: View){
+        for(animal in animalList){
+            if (v.tag == animal.name){
+                val actionToDetail = ListDataFragmentDirections.actionGoToDetails(animal)
+                Navigation.findNavController(v).navigate(actionToDetail)
+            }
+        }
+    }
+
+    class AnimalHolder (var view: ItemDataAnimalBinding): RecyclerView.ViewHolder(view.root){
 
     }
 }

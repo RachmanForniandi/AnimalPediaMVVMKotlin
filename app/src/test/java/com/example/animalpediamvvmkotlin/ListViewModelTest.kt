@@ -6,6 +6,7 @@ import com.example.animalpediamvvmkotlin.di.ApiModule
 import com.example.animalpediamvvmkotlin.di.AppModule
 import com.example.animalpediamvvmkotlin.di.DaggerViewModelComponent
 import com.example.animalpediamvvmkotlin.models.Animal
+import com.example.animalpediamvvmkotlin.models.ApiKey
 import com.example.animalpediamvvmkotlin.networkSupport.ServiceRemote
 import com.example.animalpediamvvmkotlin.utility.SharedPreferencesHelper
 import com.example.animalpediamvvmkotlin.viewModels.ListViewModel
@@ -65,6 +66,23 @@ class ListViewModelTest {
         Assert.assertEquals(1,listViewModel.animals.value?.size)
         Assert.assertEquals(false,listViewModel.loadError.value)
         Assert.assertEquals(false,listViewModel.loading.value)
+    }
+
+    @Test
+    fun getAnimalsFailure(){
+        Mockito.`when`(prefs.fetchApiKey()).thenReturn(key)
+        val testSingle = Single.error<List<Animal>>(Throwable())
+        val keySingle = Single.just(ApiKey("OK",key))
+
+
+        Mockito.`when`(serviceRemote.useAnimalData(key)).thenReturn(testSingle)
+        Mockito.`when`(serviceRemote.useApiKey()).thenReturn(keySingle)
+
+        listViewModel.refresh()
+
+        Assert.assertEquals(null,listViewModel.animals.value?.size)
+        Assert.assertEquals(false,listViewModel.loadError.value)
+        Assert.assertEquals(true,listViewModel.loading.value)
     }
 
 

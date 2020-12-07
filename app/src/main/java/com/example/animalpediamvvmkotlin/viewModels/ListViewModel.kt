@@ -142,6 +142,4 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
         disposable.clear()
     }
 
-
-
 }

@@ -111,7 +111,6 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
     }*/
 
     private fun obtainDataAnimals(key:String) {
-        Log.d("ListViewModel", "obtainDataAnimals Called")
         disposable.add(
                 api.useAnimalData(key)
                         .subscribeOn(Schedulers.newThread())
@@ -121,7 +120,6 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
                                 loadError.value = false
                                 animals.value = list
                                 loading.value = false
-
                             }
 
                             override fun onError(e: Throwable) {
@@ -134,7 +132,6 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
                                     animals.value = null
                                     loadError.value = true
                                 }
-
                             }
                         })
         )

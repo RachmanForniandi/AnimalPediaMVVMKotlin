@@ -21,6 +21,9 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class ListViewModel(application: Application): AndroidViewModel(application) {
+    constructor(application: Application,test:Boolean=true):this(application){
+        injected = true
+    }
 
     val animals by lazy { MutableLiveData<List<Animal>>() }
     val loadError by lazy { MutableLiveData<Boolean>() }
@@ -36,17 +39,19 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
     lateinit var sharedPreferences:SharedPreferencesHelper
 
     private var invalidApiKey = false
+    private var injected = false
 
-    init {
-        DaggerViewModelComponent.builder()
-            .appModule(AppModule(getApplication()))
-            .build()
-            .inject(this)
+    fun inject(){
+        if (!injected){
+            DaggerViewModelComponent.builder()
+                .appModule(AppModule(getApplication()))
+                .build()
+                .inject(this)
+        }
     }
 
-
     fun refresh(){
-        //obtainDataAnimals()
+        inject()
         loading.value = true
         invalidApiKey = false
         val itemKey = sharedPreferences.fetchApiKey()
@@ -59,6 +64,7 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun hardRefresh(){
+        inject()
         loading.value = true
         obtainKey()
     }
@@ -105,7 +111,6 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
     }*/
 
     private fun obtainDataAnimals(key:String) {
-        Log.d("ListViewModel", "obtainDataAnimals Called")
         disposable.add(
                 api.useAnimalData(key)
                         .subscribeOn(Schedulers.newThread())
@@ -115,7 +120,6 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
                                 loadError.value = false
                                 animals.value = list
                                 loading.value = false
-
                             }
 
                             override fun onError(e: Throwable) {
@@ -128,7 +132,6 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
                                     animals.value = null
                                     loadError.value = true
                                 }
-
                             }
                         })
         )
@@ -138,7 +141,5 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
         super.onCleared()
         disposable.clear()
     }
-
-
 
 }
